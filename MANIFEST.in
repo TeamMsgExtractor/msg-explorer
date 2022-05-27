@@ -1,0 +1,7 @@
+include requirements.txt
+include MANIFEST.in
+include README.md
+include LICENSE.txt
+include CHANGELOG.md
+recursive-include msg_explorer *
+recursive-exclude * *.py[co]
