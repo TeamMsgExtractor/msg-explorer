@@ -1,3 +1,3 @@
 {
-    "files": ["msg_explorer/__init__.py","msg_explorer/ui/main_window.ui","msg_explorer/main.py","msg_explorer/main_window.py","msg_explorer/_recompile.py","msg_explorer/__main__.py","main.py","msg_explorer/ui/__init__.py","requirements.txt"]
+    "files": ["msg_explorer/__init__.py","main.py","msg_explorer/ui/msg_tree_viewer.ui","msg_explorer/stream_viewer.py","msg_explorer/ui/attachments_browser.ui","msg_explorer/_recompile.py","msg_explorer/ui/msg_details_page.ui","requirements.txt","msg_explorer/main.py","msg_explorer/ui/stream_viewer.ui","msg_explorer/main_window.py","msg_explorer/msg_tree_viewer.py","msg_explorer/ui/main_window.ui","msg_explorer/__main__.py","msg_explorer/msg_details_page.py","msg_explorer/ui/__init__.py","msg_explorer/attachments_browser.py"]
 }
