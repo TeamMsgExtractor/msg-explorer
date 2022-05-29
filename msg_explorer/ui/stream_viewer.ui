@@ -28,6 +28,7 @@
    </property>
    <item row="2" column="0">
     <widget class="QStackedWidget" name="stackedWidget">
+     <widget class="QWidget" name="pageParsedViewer"/>
      <widget class="QWidget" name="pageHexViewer">
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="0">
@@ -50,7 +51,7 @@
    <item row="1" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QRadioButton" name="radioButton_2">
+      <widget class="QRadioButton" name="buttonParsedView">
        <property name="text">
         <string>Parsed View</string>
        </property>
@@ -60,7 +61,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="radioButton">
+      <widget class="QRadioButton" name="buttonHexView">
        <property name="text">
         <string>Hex View</string>
        </property>

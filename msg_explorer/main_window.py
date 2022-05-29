@@ -6,6 +6,7 @@ import extract_msg
 from PySide6.QtWidgets import QFileDialog, QMainWindow, QMessageBox, QWidget
 from PySide6.QtCore import QEventLoop, Signal, SIGNAL, Slot, SLOT
 
+from . import utils
 from .ui.ui_main_window import Ui_MainWindow
 from .ui.ui_loading_screen import Ui_LoadingScreen
 
@@ -65,18 +66,26 @@ class MainWindow(QMainWindow):
             loadingScreen.setupUi(loadingScreenWidget)
             loadingScreenWidget.show()
 
+            # We run the loading in a new thread so the ui can still update.
             output = [None]
             thread = threading.Thread(target = self._loadMsgThread, args = (msgPath, output,), daemon = True)
             thread.start()
 
+            # Wait for the thread to finish and keep updating the ui.
             while thread.is_alive():
                 self.processEventLoop.emit()
 
+            # Check for an error from the thread.
             if isinstance(output[0], Exception):
-                QMessageBox.critical(None, 'Error', 'File is not an MSG file.')
+                if isinstance(output[0], extract_msg.exceptions.InvalidFileFormatError):
+                    QMessageBox.critical(None, 'Error', 'File is not an MSG file.')
+                else:
+                    utils.displayException(output[0])
             else:
                 self.closeFile()
                 self.__msg = output[0]
+                loadingScreen.loadingMessage.setText('Finishing up...')
+                self.processEventLoop.emit()
                 self.msgOpened.emit(self.__msg)
 
             del loadingScreenWidget
@@ -85,6 +94,6 @@ class MainWindow(QMainWindow):
         try:
             msgFile = extract_msg.openMsg(msgPath[0], attachmentErrorBehavior = extract_msg.constants.ATTACHMENT_ERROR_BROKEN, strict = False)
             output[0] = msgFile
-        except extract_msg.exceptions.InvalidFileFormatError as e:
+        except Exception as e:
             output[0] = e
 

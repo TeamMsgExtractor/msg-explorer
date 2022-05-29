@@ -41,6 +41,18 @@ class StreamViewer(QtWidgets.QWidget):
         self.__msg = None
         self.__dataViewerPage = None
 
+        self.ui.buttonParsedView.toggled.connect(self._changeViewType)
+
+    @Slot()
+    def _changeViewType(self):
+        """
+        Change the view type when the radio buttons are changed.
+        """
+        if self.ui.buttonParsedView.isChecked():
+            self.ui.stackedWidget.setCurrentWidget(self.ui.pageParsedViewer)
+        else:
+            self.ui.stackedWidget.setCurrentWidget(self.ui.pageHexViewer)
+
     @Slot()
     def msgClosed(self):
         self.__msg = None
@@ -56,7 +68,6 @@ class StreamViewer(QtWidgets.QWidget):
         determine how best to show it.
         """
         self.__loadHexData(self.__msg._getStream(name))
-
 
     def __loadHexData(self, data):
         # First we need to convert the bytes into a hex stream.
