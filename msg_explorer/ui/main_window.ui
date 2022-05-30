@@ -18,14 +18,14 @@
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <widget class="MSGDetailsPage" name="pageBasicInformation">
        <attribute name="title">
         <string>File Info</string>
        </attribute>
       </widget>
-      <widget class="MSGTreeViewer" name="pageRawView">
+      <widget class="MSGTreeViewer" name="pageTreeView">
        <attribute name="title">
         <string>Tree</string>
        </attribute>
@@ -50,13 +50,8 @@
      <x>0</x>
      <y>0</y>
      <width>1012</width>
-     <height>28</height>
+     <height>20</height>
     </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>13</pointsize>
-    </font>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
@@ -66,7 +61,15 @@
     <addaction name="actionClose_Current_File"/>
     <addaction name="actionOpen_Log"/>
    </widget>
+   <widget class="QMenu" name="menuTest">
+    <property name="title">
+     <string>Font</string>
+    </property>
+    <addaction name="actionIncrease_Font"/>
+    <addaction name="actionDecrease_Font"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuTest"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionLoad_Msg_File">
@@ -82,6 +85,16 @@
   <action name="actionOpen_Log">
    <property name="text">
     <string>Open Log</string>
+   </property>
+  </action>
+  <action name="actionIncrease_Font">
+   <property name="text">
+    <string>Increase Font</string>
+   </property>
+  </action>
+  <action name="actionDecrease_Font">
+   <property name="text">
+    <string>Decrease Font</string>
    </property>
   </action>
  </widget>

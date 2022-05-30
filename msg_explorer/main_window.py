@@ -3,10 +3,10 @@ import threading
 
 import extract_msg
 
-from PySide6.QtWidgets import QFileDialog, QMainWindow, QMessageBox, QWidget
+from PySide6.QtWidgets import QApplication, QFileDialog, QMainWindow, QMessageBox, QWidget
 from PySide6.QtCore import QEventLoop, Signal, SIGNAL, Slot, SLOT
 
-from . import utils
+from . import font_handler, hex_viewer, utils
 from .ui.ui_main_window import Ui_MainWindow
 from .ui.ui_loading_screen import Ui_LoadingScreen
 
@@ -34,12 +34,21 @@ class MainWindow(QMainWindow):
         # Connect the pages to the opening and closing of the msg file.
         self.msgOpened.connect(self.ui.pageBasicInformation.msgOpened)
         self.msgOpened.connect(self.ui.pageAttachments.msgOpened)
-        self.msgOpened.connect(self.ui.pageRawView.msgOpened)
+        self.msgOpened.connect(self.ui.pageTreeView.msgOpened)
         self.msgOpened.connect(self.ui.pageStreamView.msgOpened)
         self.msgClosed.connect(self.ui.pageBasicInformation.msgClosed)
         self.msgClosed.connect(self.ui.pageAttachments.msgClosed)
-        self.msgClosed.connect(self.ui.pageRawView.msgClosed)
+        self.msgClosed.connect(self.ui.pageTreeView.msgClosed)
         self.msgClosed.connect(self.ui.pageStreamView.msgClosed)
+
+        # Connect the double click from the tree to the stream view.
+        self.ui.pageTreeView.fileDoubleClicked.connect(self.ui.pageStreamView.openStream)
+        self.ui.pageTreeView.fileDoubleClicked.connect(self._streamSelected)
+
+        self.ui.actionIncrease_Font.triggered.connect(self.increaseFont)
+        self.ui.actionDecrease_Font.triggered.connect(self.decreaseFont)
+
+        font_handler.getFontHandler().registerFont(self.font, self.setFont)
 
         self.__msg = None
 
@@ -97,3 +106,14 @@ class MainWindow(QMainWindow):
         except Exception as e:
             output[0] = e
 
+    @Slot(object)
+    def _streamSelected(self, *args):
+        self.ui.tabWidget.setCurrentWidget(self.ui.pageStreamView)
+
+    @Slot()
+    def increaseFont(self):
+        font_handler.getFontHandler().increaseFonts()
+
+    @Slot()
+    def decreaseFont(self):
+        font_handler.getFontHandler().decreaseFonts()

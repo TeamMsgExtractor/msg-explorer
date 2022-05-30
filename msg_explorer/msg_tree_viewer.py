@@ -17,15 +17,17 @@ class _DataTypeEnum(enum.Enum):
 
 class MSGTreeViewer(QtWidgets.QWidget):
     # Signal to indicate a file has been double clicked.
-    fileDoubleClicked = Signal()
+    fileDoubleClicked = Signal(list)
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent = None):
+        super().__init__(parent)
 
         self.ui = Ui_MSGTreeViewer()
         self.ui.setupUi(self)
 
         self.iconProvider = QtWidgets.QFileIconProvider()
+
+        self.ui.treeWidget.itemDoubleClicked.connect(self._treeItemDoubleClicked)
 
     @Slot()
     def msgClosed(self):
@@ -71,12 +73,19 @@ class MSGTreeViewer(QtWidgets.QWidget):
             else:
                 self.ui.treeWidget.addTopLevelItem(item)
 
-
-
-    Slot(QtWidgets.QTreeWidgetItem)
-    def _treeItemDoubleClicked(self, item):
+    Slot(QtWidgets.QTreeWidgetItem, int)
+    def _treeItemDoubleClicked(self, item, column):
+        """
+        Handles a stream in the tree being double clicked.
+        """
         # Check if the item clicked was a stream. If it was, then continue.
         if item.data(0, 0x101) == _DataTypeEnum.FILE:
-            pass
+            path = [item.data(0, 0)]
+            while item.parent():
+                item = item.parent()
+                path.insert(0, item.data(0, 0))
+
+            self.fileDoubleClicked.emit(path)
+
 
 

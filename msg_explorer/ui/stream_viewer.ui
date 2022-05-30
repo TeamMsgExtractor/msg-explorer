@@ -26,29 +26,7 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item row="2" column="0">
-    <widget class="QStackedWidget" name="stackedWidget">
-     <widget class="QWidget" name="pageParsedViewer"/>
-     <widget class="QWidget" name="pageHexViewer">
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="0">
-        <widget class="QPlainTextEdit" name="hexViewer">
-         <property name="font">
-          <font>
-           <family>Consolas</family>
-           <pointsize>14</pointsize>
-          </font>
-         </property>
-         <property name="readOnly">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </widget>
-   </item>
-   <item row="1" column="0">
+   <item row="4" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QRadioButton" name="buttonParsedView">
@@ -85,8 +63,97 @@
      </item>
     </layout>
    </item>
+   <item row="5" column="0">
+    <widget class="QStackedWidget" name="stackedWidget">
+     <widget class="QWidget" name="pageParsedNoData">
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>No stream has been loaded. Try double clicking one in the tree view.</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="StringViewer" name="pageParsedString"/>
+     <widget class="MultipleViewer" name="pageParsedMultiple"/>
+     <widget class="MultipleBinaryViewer" name="pageParsedMultipleBinary"/>
+     <widget class="PropertiesViewer" name="pageParsedProperties"/>
+     <widget class="HexViewer" name="pageHexViewer"/>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Current Stream:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelStreamName">
+       <property name="text">
+        <string>None</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>HexViewer</class>
+   <extends>QWidget</extends>
+   <header>..hex_viewer</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MultipleBinaryViewer</class>
+   <extends>QWidget</extends>
+   <header>..multiple_binary_viewer</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MultipleViewer</class>
+   <extends>QWidget</extends>
+   <header>..multiple_viewer</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>StringViewer</class>
+   <extends>QWidget</extends>
+   <header>..string_viewer</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PropertiesViewer</class>
+   <extends>QWidget</extends>
+   <header>..properties_viewer</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

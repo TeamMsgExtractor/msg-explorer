@@ -19,11 +19,14 @@
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
      </property>
+     <property name="headerHidden">
+      <bool>false</bool>
+     </property>
      <attribute name="headerDefaultSectionSize">
       <number>400</number>
      </attribute>
      <attribute name="headerStretchLastSection">
-      <bool>false</bool>
+      <bool>true</bool>
      </attribute>
      <column>
       <property name="text">

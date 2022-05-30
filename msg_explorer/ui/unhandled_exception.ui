@@ -16,12 +16,6 @@
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="0">
     <widget class="QPlainTextEdit" name="traceback">
-     <property name="font">
-      <font>
-       <family>Consolas</family>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
      <property name="lineWrapMode">
       <enum>QPlainTextEdit::NoWrap</enum>
      </property>
@@ -35,11 +29,6 @@
    </item>
    <item row="0" column="0">
     <widget class="QLabel" name="label">
-     <property name="font">
-      <font>
-       <pointsize>13</pointsize>
-      </font>
-     </property>
      <property name="text">
       <string>An unhandled exception has occured. Please report this to the developers.</string>
      </property>

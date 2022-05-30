@@ -1,6 +1,8 @@
+import datetime
 import traceback
 
 from PySide6.QtWidgets import QDialog
+from PySide6.QtGui import QFont
 
 from .ui.ui_unhandled_exception import Ui_UnhandledException
 
@@ -23,7 +25,17 @@ def displayException(ex, alternateMessage = None):
     dialogUi = Ui_UnhandledException()
     dialogUi.setupUi(dialog)
 
+    font = QFont(dialogUi.traceback.font())
+    font.setFamily('Consolas')
+    dialogUi.traceback.setFont(font)
+
     dialogUi.traceback.setPlainText(getTracebackString(ex))
 
     dialog.show()
     dialog.exec()
+
+def dataToString(data):
+    if isinstance(data, datetime.datetime):
+        return data.__format__('%a, %d %b %Y %H:%M:%S %z')
+    else:
+        return str(data)

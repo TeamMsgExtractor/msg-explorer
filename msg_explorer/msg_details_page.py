@@ -9,8 +9,8 @@ from .ui.ui_msg_details_page import Ui_MSGDetailsPage
 
 
 class MSGDetailsPage(QtWidgets.QWidget):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent = None):
+        super().__init__(parent)
         
         self.ui = Ui_MSGDetailsPage()
         self.ui.setupUi(self)
