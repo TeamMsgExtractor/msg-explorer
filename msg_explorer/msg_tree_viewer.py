@@ -1,5 +1,6 @@
 # This Python file uses the following encoding: utf-8
 import enum
+import pprint
 
 import extract_msg
 
@@ -31,7 +32,7 @@ class MSGTreeViewer(QtWidgets.QWidget):
 
     @Slot()
     def msgClosed(self):
-        pass
+        self.ui.treeWidget.clear()
 
     @Slot(extract_msg.msg.MSGFile)
     def msgOpened(self, msgFile):
@@ -39,9 +40,12 @@ class MSGTreeViewer(QtWidgets.QWidget):
         fileIcon = fileIcon = self.iconProvider.icon(QtWidgets.QFileIconProvider.File)
         # First handle all of the storages. These will be the base
         # for all streams.
-        self.ui.treeWidget.clear()
         storages = {}
+        prefixLen = msgFile.prefixLen
+        prefixTuple = tuple(msgFile.prefixList)
         for path in msgFile.listDir(False, True):
+            # Only add if part of the local file.
+            path = path[prefixLen:]
             storages[tuple(path)] = QtWidgets.QTreeWidgetItem((path[-1],))
             storages[tuple(path)].setIcon(0, folderIcon)
             storages[tuple(path)].setData(0, 0x101, _DataTypeEnum.FOLDER)
@@ -62,6 +66,7 @@ class MSGTreeViewer(QtWidgets.QWidget):
 
         # Now we add the files.
         for path in msgFile.listDir(True, False):
+            path = path[prefixLen:]
             item = QtWidgets.QTreeWidgetItem((path[-1],))
             item.setIcon(0, fileIcon)
             item.setData(0, 0x101, _DataTypeEnum.FILE)
@@ -73,7 +78,7 @@ class MSGTreeViewer(QtWidgets.QWidget):
             else:
                 self.ui.treeWidget.addTopLevelItem(item)
 
-    Slot(QtWidgets.QTreeWidgetItem, int)
+    @Slot(QtWidgets.QTreeWidgetItem, int)
     def _treeItemDoubleClicked(self, item, column):
         """
         Handles a stream in the tree being double clicked.

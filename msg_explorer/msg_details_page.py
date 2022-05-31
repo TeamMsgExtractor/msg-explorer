@@ -18,17 +18,22 @@ class MSGDetailsPage(QtWidgets.QWidget):
     @Slot()
     def msgClosed(self):
         self.ui.labelPath.setText('No File Loaded')
+        self.ui.labelPrefix.setText('')
         self.ui.labelClass.setText('')
         self.ui.labelClassType.setText('')
         self.ui.labelEncoding.setText('')
         self.ui.labelAttachCount.setText('')
         self.ui.labelRecipCount.setText('')
+        self.ui.labelSubject.setText('')
 
     @Slot(extract_msg.msg.MSGFile)
     def msgOpened(self, msgFile):
         self.ui.labelPath.setText(msgFile.path)
+        self.ui.labelPrefix.setText(msgFile.prefix)
         self.ui.labelClass.setText(msgFile.__class__.__name__)
         self.ui.labelClassType.setText(msgFile.classType)
         self.ui.labelEncoding.setText(msgFile.stringEncoding)
         self.ui.labelAttachCount.setText(str(len(msgFile.attachments)))
         self.ui.labelRecipCount.setText(str(len(msgFile.recipients)))
+        if isinstance(msgFile, extract_msg.MessageBase):
+            self.ui.labelSubject.setText(msgFile.subject)

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Main Window</string>
+   <string>MSG Explorer</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -58,7 +58,9 @@
      <string>File</string>
     </property>
     <addaction name="actionLoad_Msg_File"/>
+    <addaction name="actionLoad_Parent_Msg"/>
     <addaction name="actionClose_Current_File"/>
+    <addaction name="separator"/>
     <addaction name="actionOpen_Log"/>
    </widget>
    <widget class="QMenu" name="menuTest">
@@ -95,6 +97,14 @@
   <action name="actionDecrease_Font">
    <property name="text">
     <string>Decrease Font</string>
+   </property>
+  </action>
+  <action name="actionLoad_Parent_Msg">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Load Parent Msg</string>
    </property>
   </action>
  </widget>

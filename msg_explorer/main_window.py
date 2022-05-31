@@ -29,6 +29,7 @@ class MainWindow(QMainWindow):
 
         # Connect the menu bar slots.
         self.ui.actionLoad_Msg_File.triggered.connect(self.loadMsgFile)
+        self.ui.actionLoad_Parent_Msg.triggered.connect(self.loadParent)
         self.ui.actionClose_Current_File.triggered.connect(self.closeFile)
 
         # Connect the pages to the opening and closing of the msg file.
@@ -48,9 +49,27 @@ class MainWindow(QMainWindow):
         self.ui.actionIncrease_Font.triggered.connect(self.increaseFont)
         self.ui.actionDecrease_Font.triggered.connect(self.decreaseFont)
 
+        self.ui.pageAttachments.attachmentSelected.connect(self.attachmentSelected)
+
         font_handler.getFontHandler().registerFont(self.font, self.setFont)
 
         self.__msg = None
+        self.__parentMsgs = []
+
+    @Slot(int)
+    def attachmentSelected(self, index):
+        attachment = self.__msg.attachments[index]
+        if isinstance(attachment, extract_msg.Attachment):
+            if attachment.type == 'data':
+                self.ui.pageStreamView.openStream(attachment.dir.split('/') + ['__substg1.0_37010102'])
+                self.ui.tabWidget.setCurrentWidget(self.ui.pageStreamView)
+            elif attachment.type == 'msg':
+                if QMessageBox.question(self, 'Open Embedded Msg', 'Would you like to open the embedded MSG file?') == QMessageBox.Yes:
+                    self.__parentMsgs.append(self.__msg)
+                    self.__msg = attachment.data
+                    self.msgClosed.emit()
+                    self.msgOpened.emit(self.__msg)
+                    self.ui.actionLoad_Parent_Msg.setEnabled(True)
 
     @Slot()
     def closeFile(self):
@@ -58,9 +77,14 @@ class MainWindow(QMainWindow):
         Closes the current MSG file and cleans up all the UI components.
         """
         if self.__msg:
-            self.__msg.close()
+            if self.__parentMsgs:
+                self.__parentMsgs[0].close()
+                self.__parentMsgs.clear()
+            else:
+                self.__msg.close()
             self.__msg = None
             self.msgClosed.emit()
+            self.ui.actionLoad_Parent_Msg.setEnabled(False)
 
     @Slot()
     def loadMsgFile(self):
@@ -87,7 +111,7 @@ class MainWindow(QMainWindow):
             # Check for an error from the thread.
             if isinstance(output[0], Exception):
                 if isinstance(output[0], extract_msg.exceptions.InvalidFileFormatError):
-                    QMessageBox.critical(None, 'Error', 'File is not an MSG file.')
+                    QMessageBox.critical(self, 'Error', 'File is not an MSG file.')
                 else:
                     utils.displayException(output[0])
             else:
@@ -98,6 +122,20 @@ class MainWindow(QMainWindow):
                 self.msgOpened.emit(self.__msg)
 
             del loadingScreenWidget
+
+    @Slot()
+    def loadParent(self):
+        """
+        Moves to the parent msg file.
+        """
+        if self.__parentMsgs:
+            self.__msg = self.__parentMsgs.pop()
+            self.msgClosed.emit()
+            self.msgOpened.emit(self.__msg)
+            if not self.__parentMsgs:
+                self.ui.actionLoad_Parent_Msg.setEnabled(False)
+        else:
+            QMessageBox.critical(self, 'Error', 'No parent MSG file.')
 
     def _loadMsgThread(self, msgPath, output):
         try:

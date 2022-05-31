@@ -10,15 +10,20 @@ from .ui.ui_attachments_browser import Ui_AttachmentsBrowser
 
 
 class AttachmentsBrowser(QtWidgets.QWidget):
+    # Signals that an attachment was double clicked.
+    attachmentSelected = Signal(int)
     def __init__(self, parent = None):
         super().__init__(parent)
         
         self.ui = Ui_AttachmentsBrowser()
         self.ui.setupUi(self)
 
+        self.ui.tableAttachments.cellDoubleClicked.connect(self._cellDoubleClicked)
+
     @Slot()
     def msgClosed(self):
         self.ui.tableAttachments.clearContents()
+        self.ui.tableAttachments.setRowCount(0)
 
     @Slot(extract_msg.msg.MSGFile)
     def msgOpened(self, msgFile):
@@ -31,7 +36,7 @@ class AttachmentsBrowser(QtWidgets.QWidget):
                     self.ui.tableAttachments.setItem(index, 2, QTableWidgetItem(att.shortFilename))
                     self.ui.tableAttachments.setItem(index, 3, QTableWidgetItem(att.longFilename))
                     self.ui.tableAttachments.setItem(index, 4, QTableWidgetItem(att.cid))
-                    self.ui.tableAttachments.setItem(index, 5, QTableWidgetItem(str(att.renderingPosition)))
+                    self.ui.tableAttachments.setItem(index, 5, QTableWidgetItem("Not Rendered" if att.renderingPosition == 0xFFFFFFFF else str(att.renderingPosition)))
                 elif isinstance(att, extract_msg.attachment.BrokenAttachment):
                     self.ui.tableAttachments.setItem(index, 1, QTableWidgetItem("Broken"))
                 elif isinstance(att, extract_msg.attachment.UnsupportedAttachment):
@@ -40,3 +45,11 @@ class AttachmentsBrowser(QtWidgets.QWidget):
                     self.ui.tableAttachments.setItem(index, 1, QTableWidgetItem("Unknown Type"))
         except AttributeError as e:
             print(e)
+
+    @Slot(int, int)
+    def _cellDoubleClicked(self, row : int, column : int):
+        """
+        Handle a cell being double clicked to emit the attachmentSelected signal.
+        """
+        if row < self.ui.tableAttachments.rowCount():
+            self.attachmentSelected.emit(int(self.ui.tableAttachments.item(row, 0).data(0)))
