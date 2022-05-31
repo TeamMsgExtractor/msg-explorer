@@ -13,6 +13,48 @@
   <property name="windowTitle">
    <string>AttachmentsBrowser</string>
   </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QTableWidget" name="tableAttachments">
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>150</number>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>ID</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Status</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Short Name</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Long Name</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Content ID</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Rendering Position</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>
