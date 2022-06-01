@@ -1,6 +1,6 @@
 include requirements.txt
 include MANIFEST.in
-include README.md
+include README.rst
 include LICENSE.txt
 include CHANGELOG.md
 recursive-include msg_explorer *
