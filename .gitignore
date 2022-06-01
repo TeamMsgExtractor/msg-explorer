@@ -72,3 +72,8 @@ Thumbs.db
 # --------
 *.dll
 *.exe
+
+*.egg-info
+build
+upload.bat
+upload.sh

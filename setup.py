@@ -5,7 +5,7 @@ import re
 
 # A handful of variables that are used a couple of times.
 github_url = 'https://github.com/TeamMsgExtractor/msg-explorer'
-main_module = 'msg-explorer'
+main_module = 'msg_explorer'
 
 # Read in the description from README.
 with open('README.rst', 'rb') as stream:
@@ -13,7 +13,7 @@ with open('README.rst', 'rb') as stream:
 
 # Get the version this way to avoid import issues.
 version_re = re.compile("__version__ = '(?P<version>[0-9\\.]*)'")
-with open('extract_msg/__init__.py', 'r') as stream:
+with open('msg_explorer/__init__.py', 'r') as stream:
     contents = stream.read()
 match = version_re.search(contents)
 version = match.groupdict()['version']
