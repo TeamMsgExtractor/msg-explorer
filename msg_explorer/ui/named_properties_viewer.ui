@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>NamedPropertiesViewer</class>
+ <widget class="QWidget" name="NamedPropertiesViewer">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>NamedPropertiesViewer</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="0">
+    <widget class="QTableWidget" name="tableNamedProperties">
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>300</number>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Property ID</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Named PID</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Data</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QComboBox" name="comboBoxInstance"/>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

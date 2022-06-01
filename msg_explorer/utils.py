@@ -7,12 +7,6 @@ from PySide6.QtGui import QFont
 from .ui.ui_unhandled_exception import Ui_UnhandledException
 
 
-def getTracebackString(ex):
-    """
-    Takes the exception and returns a string of the formatted exception.
-    """
-    return ''.join(traceback.format_exception(ex.__class__, ex, ex.__traceback__))
-
 def displayException(ex, alternateMessage = None):
     """
     Displays an unhandled exception in a new dialog.
@@ -39,3 +33,9 @@ def dataToString(data):
         return data.__format__('%a, %d %b %Y %H:%M:%S %z')
     else:
         return str(data)
+
+def getTracebackString(ex):
+    """
+    Takes the exception and returns a string of the formatted exception.
+    """
+    return ''.join(traceback.format_exception(ex.__class__, ex, ex.__traceback__))

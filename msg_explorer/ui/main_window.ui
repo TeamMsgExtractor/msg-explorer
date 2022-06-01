@@ -18,7 +18,7 @@
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="MSGDetailsPage" name="pageBasicInformation">
        <attribute name="title">
@@ -33,6 +33,11 @@
       <widget class="AttachmentsBrowser" name="pageAttachments">
        <attribute name="title">
         <string>Attachments</string>
+       </attribute>
+      </widget>
+      <widget class="NamedPropertiesViewer" name="pageNamedProperties">
+       <attribute name="title">
+        <string>Named Properties</string>
        </attribute>
       </widget>
       <widget class="StreamViewer" name="pageStreamView">
@@ -131,6 +136,12 @@
    <class>MSGDetailsPage</class>
    <extends>QWidget</extends>
    <header>..msg_details_page</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>NamedPropertiesViewer</class>
+   <extends>QWidget</extends>
+   <header>..named_properties_viewer</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

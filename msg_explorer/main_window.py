@@ -34,17 +34,21 @@ class MainWindow(QMainWindow):
 
         # Connect the pages to the opening and closing of the msg file.
         self.msgOpened.connect(self.ui.pageBasicInformation.msgOpened)
-        self.msgOpened.connect(self.ui.pageAttachments.msgOpened)
         self.msgOpened.connect(self.ui.pageTreeView.msgOpened)
+        self.msgOpened.connect(self.ui.pageAttachments.msgOpened)
+        self.msgOpened.connect(self.ui.pageNamedProperties.msgOpened)
         self.msgOpened.connect(self.ui.pageStreamView.msgOpened)
         self.msgClosed.connect(self.ui.pageBasicInformation.msgClosed)
-        self.msgClosed.connect(self.ui.pageAttachments.msgClosed)
         self.msgClosed.connect(self.ui.pageTreeView.msgClosed)
-        self.msgClosed.connect(self.ui.pageStreamView.msgClosed)
+        self.msgClosed.connect(self.ui.pageAttachments.msgClosed)
+        self.msgClosed.connect(self.ui.pageNamedProperties.msgClosed)
+        self.msgClosed.connect(self.ui.pageStreamView.msgOpened)
 
         # Connect the double click from the tree to the stream view.
         self.ui.pageTreeView.fileDoubleClicked.connect(self.ui.pageStreamView.openStream)
         self.ui.pageTreeView.fileDoubleClicked.connect(self._streamSelected)
+        self.ui.pageNamedProperties.namedPropertySelected.connect(lambda x : self.ui.pageStreamView.openStream(x, True))
+        self.ui.pageNamedProperties.namedPropertySelected.connect(self._streamSelected)
 
         self.ui.actionIncrease_Font.triggered.connect(self.increaseFont)
         self.ui.actionDecrease_Font.triggered.connect(self.decreaseFont)

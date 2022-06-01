@@ -86,6 +86,7 @@
      <widget class="MultipleViewer" name="pageParsedMultiple"/>
      <widget class="MultipleBinaryViewer" name="pageParsedMultipleBinary"/>
      <widget class="PropertiesViewer" name="pageParsedProperties"/>
+     <widget class="GuidViewer" name="pageParsedGuidViewer"/>
      <widget class="HexViewer" name="pageHexViewer"/>
     </widget>
    </item>
@@ -151,6 +152,12 @@
    <class>PropertiesViewer</class>
    <extends>QWidget</extends>
    <header>..properties_viewer</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GuidViewer</class>
+   <extends>QWidget</extends>
+   <header>..guid_viewer</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -29,6 +29,7 @@ class StreamViewer(QtWidgets.QWidget):
             'prop': self.ui.pageParsedProperties,
             '001E': self.ui.pageParsedString,
             '001F': self.ui.pageParsedString,
+            '0048': self.ui.pageParsedGuidViewer,
             '0102': self.ui.pageHexViewer,
             '1002': self.ui.pageParsedMultiple,
             '1003': self.ui.pageParsedMultiple,
@@ -72,11 +73,12 @@ class StreamViewer(QtWidgets.QWidget):
         self.__msg = msgFile
 
     @Slot(list)
-    def openStream(self, name):
+    def openStream(self, name, prefix = False):
         """
         Loads the data for the specified stream. Will automatically
         determine how best to show it.
         """
+        name = self.__msg.fixPath(name, prefix).split('/')
         # First thing is first, handle a multiple stream part being selected.
         if len(name[-1]) == 29:
             # A multiple stream part has 9 extra characters on the name. We are
@@ -114,9 +116,11 @@ class StreamViewer(QtWidgets.QWidget):
         else:
             _type = name[-1][-4:]
             path = name[:-1] + [name[-1][:-4]]
-            data = self.__msg._getTypedStream(name, _type)[1]
+            data = self.__msg._getTypedStream(path, False, _type)[1]
             if _type in ('001E', '001F'): # String.
                 self.ui.pageParsedString.loadString(data, _type)
+            elif _type == '0048': # GUID.
+                self.ui.pageParsedGuidViewer.loadGuid(data)
             elif _type == '0102': # Binary.
                 # For binary, we just show the hex viewer.
                 pass
