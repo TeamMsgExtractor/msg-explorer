@@ -27,7 +27,7 @@ https://github.com/TeamMsgExtractor/msg-explorer
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 __author__ = 'Destiny Peterson'
-__date__ = '2022-05-27'
+__date__ = '2022-05-31'
 __version__ = '0.0.1a'
 
 # When this module is imported, we should try to compile the forms. They only
