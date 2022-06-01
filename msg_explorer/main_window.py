@@ -7,6 +7,7 @@ from PySide6.QtWidgets import QApplication, QFileDialog, QMainWindow, QMessageBo
 from PySide6.QtCore import QEventLoop, Signal, SIGNAL, Slot, SLOT
 
 from . import font_handler, hex_viewer, utils
+from .logger_widget import LoggerWidget
 from .ui.ui_main_window import Ui_MainWindow
 from .ui.ui_loading_screen import Ui_LoadingScreen
 
@@ -31,6 +32,7 @@ class MainWindow(QMainWindow):
         self.ui.actionLoad_Msg_File.triggered.connect(self.loadMsgFile)
         self.ui.actionLoad_Parent_Msg.triggered.connect(self.loadParent)
         self.ui.actionClose_Current_File.triggered.connect(self.closeFile)
+        self.ui.actionOpen_Log.triggered.connect(self._showLogWindow)
 
         # Connect the pages to the opening and closing of the msg file.
         self.msgOpened.connect(self.ui.pageBasicInformation.msgOpened)
@@ -59,6 +61,15 @@ class MainWindow(QMainWindow):
 
         self.__msg = None
         self.__parentMsgs = []
+
+        self.__logger = LoggerWidget()
+
+    def closeEvent(self, event):
+        """
+        Override the default close function to cause all windows to be
+        closed by this function before running default close.
+        """
+        QApplication.closeAllWindows()
 
     @Slot(int)
     def attachmentSelected(self, index):
@@ -147,6 +158,10 @@ class MainWindow(QMainWindow):
             output[0] = msgFile
         except Exception as e:
             output[0] = e
+
+    @Slot()
+    def _showLogWindow(self):
+        self.__logger.show()
 
     @Slot(object)
     def _streamSelected(self, *args):

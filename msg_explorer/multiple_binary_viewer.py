@@ -7,8 +7,8 @@ from .ui.ui_multiple_binary_viewer import Ui_MultipleBinaryViewer
 
 
 class MultipleBinaryViewer(QtWidgets.QWidget):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent = None):
+        super().__init__(parent)
         
         self.ui = Ui_MultipleBinaryViewer()
         self.ui.setupUi(self)

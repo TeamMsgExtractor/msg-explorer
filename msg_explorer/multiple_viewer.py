@@ -25,8 +25,8 @@ _DATE_TYPE_STRINGS = {
 
 
 class MultipleViewer(QtWidgets.QWidget):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent = None):
+        super().__init__(parent)
         
         self.ui = Ui_MultipleViewer()
         self.ui.setupUi(self)

@@ -30,8 +30,8 @@ _DISPLAY_PROPS = (
 
 
 class PropertiesViewer(QtWidgets.QWidget):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent = None):
+        super().__init__(parent)
         
         self.ui = Ui_PropertiesViewer()
         self.ui.setupUi(self)

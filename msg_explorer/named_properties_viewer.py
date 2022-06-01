@@ -12,8 +12,8 @@ from .ui.ui_named_properties_viewer import Ui_NamedPropertiesViewer
 
 class NamedPropertiesViewer(QtWidgets.QWidget):
     namedPropertySelected = Signal(list)
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent = None):
+        super().__init__(parent)
         
         self.ui = Ui_NamedPropertiesViewer()
         self.ui.setupUi(self)
