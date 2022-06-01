@@ -27,6 +27,15 @@ with open(filename, 'r') as stream:
         if package:
             dependencies.append(package)
 
+classifiers = [
+    'Development Status :: 5 - Production/Stable',
+    'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+    'Operating System :: OS Independent',
+    'Programming Language :: Python :: 3',
+]
+
+
+
 setup(
     name=main_module,
     version=version,
@@ -43,4 +52,5 @@ setup(
     entry_points={'console_scripts': ['msg_explorer = msg_explorer.main:mainRunner',]},
     include_package_data=True,
     install_requires=dependencies,
+    classifiers=classifiers,
 )

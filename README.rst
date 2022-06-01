@@ -1,12 +1,14 @@
 |License: GPL v3| |PyPI3| |PyPI2|
 
-msg-extractor
+msg-explorer
 =============
 
-Extracts emails and attachments saved in Microsoft Outlook's .msg files
+Allows for the graphical browsing of Outlook Message Files and their data.
 
-The python package extract_msg automates the extraction of key email
-data (from, to, cc, date, subject, body) and the email's attachments.
+While normally intended as a development tool, it is fine to use as a normal
+user.
+
+If you'd like to help provide translations, you can contact me on the Discord.
 
 NOTICE
 ======
@@ -29,7 +31,7 @@ following command:
      python -m msg_explorer
 
 
-If you have any questions feel free to contact me, Destiny, as arceusthe [at]
+If you have any questions feel free to contact me, Destiny, at arceusthe [at]
 gmail [dot] com.
 
 If you have issues, it would be best to get help for them by opening a
@@ -69,8 +71,8 @@ Credits
 .. |License: GPL v3| image:: https://img.shields.io/badge/License-GPLv3-blue.svg
    :target: LICENSE.txt
 
-.. |PyPI3| image:: https://img.shields.io/badge/pypi-1.0.0-blue.svg
-   :target: https://pypi.org/project/msg-explorer/1.0.0/
+.. |PyPI3| image:: https://img.shields.io/badge/pypi-1.0.1-blue.svg
+   :target: https://pypi.org/project/msg-explorer/1.0.1/
 
 .. |PyPI2| image:: https://img.shields.io/badge/python-3.6+-brightgreen.svg
    :target: https://www.python.org/downloads/release/python-367/
