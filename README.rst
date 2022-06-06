@@ -46,6 +46,12 @@ latest version of msg-explorer (check the version on PyPi). \* State your
 Python version. \* Include the code, if any, that you used. \* Include a
 copy of the traceback.
 
+Supporting The Module
+---------------------
+
+If you'd like to donate to help support the development of the module, you can
+donate to Destiny at her Buy Me a Coffee page here: `Buy Me a Coffee`_
+
 Installation
 ------------
 
@@ -71,10 +77,11 @@ Credits
 .. |License: GPL v3| image:: https://img.shields.io/badge/License-GPLv3-blue.svg
    :target: LICENSE.txt
 
-.. |PyPI3| image:: https://img.shields.io/badge/pypi-1.0.1-blue.svg
-   :target: https://pypi.org/project/msg-explorer/1.0.1/
+.. |PyPI3| image:: https://img.shields.io/badge/pypi-1.1.0-blue.svg
+   :target: https://pypi.org/project/msg-explorer/1.1.0/
 
 .. |PyPI2| image:: https://img.shields.io/badge/python-3.6+-brightgreen.svg
    :target: https://www.python.org/downloads/release/python-367/
 .. _Destiny Peterson (The Elemental of Destruction): https://github.com/TheElementalOfDestruction
 .. _Discord: https://discord.com/invite/B77McRmzdc
+.. _Buy Me a Coffee: https://www.buymeacoffee.com/DestructionE

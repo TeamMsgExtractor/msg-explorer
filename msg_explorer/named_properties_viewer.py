@@ -10,6 +10,15 @@ from . import utils
 from .ui.ui_named_properties_viewer import Ui_NamedPropertiesViewer
 
 
+class NamedPIDItem(QTableWidgetItem):
+    """
+    Little bit of a hack to force the Named PID column to sort properly.
+    """
+    def __lt__(self, item):
+        return int(self.data(0)) < int(item.data(0))
+
+
+
 class NamedPropertiesViewer(QtWidgets.QWidget):
     namedPropertySelected = Signal(list)
     def __init__(self, parent = None):
@@ -33,7 +42,7 @@ class NamedPropertiesViewer(QtWidgets.QWidget):
         self.ui.tableNamedProperties.setRowCount(len(named))
         for index, key in enumerate(keys):
             self.ui.tableNamedProperties.setItem(index, 0, QTableWidgetItem(key))
-            self.ui.tableNamedProperties.setItem(index, 1, QTableWidgetItem(str(named[key].namedPropertyID)))
+            self.ui.tableNamedProperties.setItem(index, 1, NamedPIDItem(str(named[key].namedPropertyID)))
             # We need to figure out what to display for the data.
             if isinstance(named[key].data, (int, float, bool, None.__class__)):
                 # This helps to shortcut a bunch of properties.
@@ -77,10 +86,11 @@ class NamedPropertiesViewer(QtWidgets.QWidget):
 
     @Slot(str)
     def _comboBoxChanged(self, entry):
-        if self.ui.comboBoxInstance.currentText() == 'MSG File':
-            self.loadNamed(self.__msg.named)
-        else:
-            self.loadNamed(self.__msg.attachments[int(self.ui.comboBoxInstance.currentText().split(" ")[1])].namedProperties)
+        if entry:
+            if entry == 'MSG File':
+                self.loadNamed(self.__msg.named)
+            else:
+                self.loadNamed(self.__msg.attachments[int(self.ui.comboBoxInstance.currentText().split(" ")[1])].namedProperties)
 
 
 

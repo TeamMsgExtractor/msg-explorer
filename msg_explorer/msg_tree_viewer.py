@@ -7,6 +7,7 @@ import extract_msg
 from PySide6 import QtCore
 from PySide6 import QtWidgets
 from PySide6.QtCore import Signal, SIGNAL, Slot, SLOT
+from PySide6.QtWidgets import QTreeWidgetItem
 
 from . import utils
 from .ui.ui_msg_tree_viewer import Ui_MSGTreeViewer
@@ -15,6 +16,26 @@ from .ui.ui_msg_tree_viewer import Ui_MSGTreeViewer
 class _DataTypeEnum(enum.Enum):
     FILE = 0
     FOLDER = 1
+
+
+
+class MsgTreeItem(QTreeWidgetItem):
+    def __init__(self, text : str, _type : _DataTypeEnum):
+        super().__init__((text,))
+        self.__entryType = _type
+
+    def __lt__(self, treeItem : "MsgTreeItem"):
+        if self.__entryType == treeItem.__entryType:
+            return self.data(0, 0) < treeItem.data(0, 0)
+        else:
+            # If they are not the same type, folder is always less than file.
+            return self.__entryType == _DataTypeEnum.FOLDER
+
+    @property
+    def entryType(self) -> _DataTypeEnum:
+        return self.__entryType
+
+
 
 class MSGTreeViewer(QtWidgets.QWidget):
     # Signal to indicate a file has been double clicked.
@@ -29,6 +50,7 @@ class MSGTreeViewer(QtWidgets.QWidget):
         self.iconProvider = QtWidgets.QFileIconProvider()
 
         self.ui.treeWidget.itemDoubleClicked.connect(self._treeItemDoubleClicked)
+        self.ui.treeWidget.sortItems(0, QtCore.Qt.SortOrder.AscendingOrder)
 
     @Slot()
     def msgClosed(self):
@@ -46,9 +68,8 @@ class MSGTreeViewer(QtWidgets.QWidget):
         for path in msgFile.listDir(False, True):
             # Only add if part of the local file.
             path = path[prefixLen:]
-            storages[tuple(path)] = QtWidgets.QTreeWidgetItem((path[-1],))
+            storages[tuple(path)] = MsgTreeItem(path[-1], _DataTypeEnum.FOLDER)
             storages[tuple(path)].setIcon(0, folderIcon)
-            storages[tuple(path)].setData(0, 0x101, _DataTypeEnum.FOLDER)
 
         # Now connect all of the parents together properly.
         for path in storages:
@@ -67,9 +88,8 @@ class MSGTreeViewer(QtWidgets.QWidget):
         # Now we add the files.
         for path in msgFile.listDir(True, False):
             path = path[prefixLen:]
-            item = QtWidgets.QTreeWidgetItem((path[-1],))
+            item = MsgTreeItem(path[-1], _DataTypeEnum.FILE)
             item.setIcon(0, fileIcon)
-            item.setData(0, 0x101, _DataTypeEnum.FILE)
             if len(path) > 1:
                 try:
                     storages[tuple(path[:-1])].addChild(item)
@@ -84,7 +104,7 @@ class MSGTreeViewer(QtWidgets.QWidget):
         Handles a stream in the tree being double clicked.
         """
         # Check if the item clicked was a stream. If it was, then continue.
-        if item.data(0, 0x101) == _DataTypeEnum.FILE:
+        if item.entryType == _DataTypeEnum.FILE:
             path = [item.data(0, 0)]
             while item.parent():
                 item = item.parent()

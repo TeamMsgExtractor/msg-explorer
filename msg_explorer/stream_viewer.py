@@ -137,3 +137,14 @@ class StreamViewer(QtWidgets.QWidget):
         except KeyError as e:
             utils.displayException(e)
         self._changeViewType()
+
+    @Slot(str, bytes)
+    def openStreamBytes(self, name : str, data : bytes):
+        """
+        Open a stream, overriding the behavior used for handling it. Used for
+        displaying streams that are not accessible through normal means.
+        """
+        self.__currentPage = self.__typePages['0102']
+        self.ui.labelStreamName = name
+        self.ui.pageHexViewer.loadHexData(data)
+        self._changeViewType()

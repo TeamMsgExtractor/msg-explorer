@@ -28,7 +28,8 @@ class MSGDetailsPage(QtWidgets.QWidget):
 
     @Slot(extract_msg.msg.MSGFile)
     def msgOpened(self, msgFile):
-        self.ui.labelPath.setText(msgFile.path)
+        if len(msgFile.path) < 1536:
+            self.ui.labelPath.setText(msgFile.path)
         self.ui.labelPrefix.setText(msgFile.prefix)
         self.ui.labelClass.setText(msgFile.__class__.__name__)
         self.ui.labelClassType.setText(msgFile.classType)

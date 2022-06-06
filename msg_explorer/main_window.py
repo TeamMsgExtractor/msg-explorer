@@ -44,7 +44,7 @@ class MainWindow(QMainWindow):
         self.msgClosed.connect(self.ui.pageTreeView.msgClosed)
         self.msgClosed.connect(self.ui.pageAttachments.msgClosed)
         self.msgClosed.connect(self.ui.pageNamedProperties.msgClosed)
-        self.msgClosed.connect(self.ui.pageStreamView.msgOpened)
+        self.msgClosed.connect(self.ui.pageStreamView.msgClosed)
 
         # Connect the double click from the tree to the stream view.
         self.ui.pageTreeView.fileDoubleClicked.connect(self.ui.pageStreamView.openStream)
@@ -56,6 +56,7 @@ class MainWindow(QMainWindow):
         self.ui.actionDecrease_Font.triggered.connect(self.decreaseFont)
 
         self.ui.pageAttachments.attachmentSelected.connect(self.attachmentSelected)
+        self.ui.pageAttachments.signedAttachmentSelected.connect(self.signedAttachmentSelected)
 
         font_handler.getFontHandler().registerFont(self.font, self.setFont)
 
@@ -73,7 +74,11 @@ class MainWindow(QMainWindow):
 
     @Slot(int)
     def attachmentSelected(self, index):
-        attachment = self.__msg.attachments[index]
+        if isinstance(self.__msg, extract_msg.MessageSignedBase):
+            attachment = self.__msg._rawAttachments[index]
+        else:
+            attachment = self.__msg.attachments[index]
+
         if isinstance(attachment, extract_msg.Attachment):
             if attachment.type == 'data':
                 self.ui.pageStreamView.openStream(attachment.dir.split('/') + ['__substg1.0_37010102'])
@@ -154,10 +159,19 @@ class MainWindow(QMainWindow):
 
     def _loadMsgThread(self, msgPath, output):
         try:
-            msgFile = extract_msg.openMsg(msgPath[0], attachmentErrorBehavior = extract_msg.constants.ATTACHMENT_ERROR_BROKEN, strict = False)
+            msgFile = extract_msg.openMsg(msgPath[0], attachmentErrorBehavior = extract_msg.enums.AttachErrorBehavior.BROKEN, strict = False)
             output[0] = msgFile
         except Exception as e:
             output[0] = e
+
+    @Slot(int)
+    def signedAttachmentSelected(self, index : int):
+        """
+        Handle a signed attachment being selected.
+        """
+        att = self.__msg.attachments[index]
+        self.ui.pageStreamView.openStreamBytes(f'Signed Attachment: {att.name}', att.data)
+        self.ui.tabWidget.setCurrentWidget(self.ui.pageStreamView)
 
     @Slot()
     def _showLogWindow(self):

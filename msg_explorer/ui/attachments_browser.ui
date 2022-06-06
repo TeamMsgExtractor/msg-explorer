@@ -55,6 +55,11 @@
      </column>
      <column>
       <property name="text">
+       <string>Mime Type</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
        <string>Rendering Position</string>
       </property>
      </column>
