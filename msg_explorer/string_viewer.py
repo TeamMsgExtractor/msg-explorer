@@ -16,7 +16,7 @@ class StringViewer(QtWidgets.QWidget):
     @Slot()
     def clear(self):
         self.ui.labelType.setText('')
-        self.textDisplay.setPlainText('')
+        self.ui.textDisplay.setPlainText('')
 
     @Slot(str, str)
     def loadString(self, data, _type):

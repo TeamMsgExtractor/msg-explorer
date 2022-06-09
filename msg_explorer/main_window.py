@@ -49,7 +49,7 @@ class MainWindow(QMainWindow):
         # Connect the double click from the tree to the stream view.
         self.ui.pageTreeView.fileDoubleClicked.connect(self.ui.pageStreamView.openStream)
         self.ui.pageTreeView.fileDoubleClicked.connect(self._streamSelected)
-        self.ui.pageNamedProperties.namedPropertySelected.connect(lambda x : self.ui.pageStreamView.openStream(x, True))
+        self.ui.pageNamedProperties.namedPropertySelected.connect(self.ui.pageStreamView.openStream)
         self.ui.pageNamedProperties.namedPropertySelected.connect(self._streamSelected)
 
         self.ui.actionIncrease_Font.triggered.connect(self.increaseFont)
@@ -80,10 +80,10 @@ class MainWindow(QMainWindow):
             attachment = self.__msg.attachments[index]
 
         if isinstance(attachment, extract_msg.Attachment):
-            if attachment.type == 'data':
+            if attachment.type == extract_msg.enums.AttachmentType.DATA:
                 self.ui.pageStreamView.openStream(attachment.dir.split('/') + ['__substg1.0_37010102'])
                 self.ui.tabWidget.setCurrentWidget(self.ui.pageStreamView)
-            elif attachment.type == 'msg':
+            elif attachment.type == extract_msg.enums.AttachmentType.MSG:
                 if QMessageBox.question(self, 'Open Embedded Msg', 'Would you like to open the embedded MSG file?') == QMessageBox.Yes:
                     self.__parentMsgs.append(self.__msg)
                     self.__msg = attachment.data

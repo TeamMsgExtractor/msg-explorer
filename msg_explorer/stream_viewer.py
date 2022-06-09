@@ -73,7 +73,7 @@ class StreamViewer(QtWidgets.QWidget):
         self.__msg = msgFile
 
     @Slot(list)
-    def openStream(self, name, prefix = False):
+    def openStream(self, name, prefix = True):
         """
         Loads the data for the specified stream. Will automatically
         determine how best to show it.
@@ -85,7 +85,7 @@ class StreamViewer(QtWidgets.QWidget):
             # just telling the function to run again with the main stream.
             return self.openStream(name[:-1] + [name[-1][:-9]])
 
-        self.ui.pageHexViewer.loadHexData(self.__msg._getStream(name))
+        self.ui.pageHexViewer.loadHexData(self.__msg._getStream(name, False))
         self.ui.labelStreamName.setText('/'.join(name))
         # Now determine how to load the rest of the data.
         if name[-1] == '__properties_version1.0':

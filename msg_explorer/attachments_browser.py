@@ -1,4 +1,6 @@
 # This Python file uses the following encoding: utf-8
+import logging
+
 import extract_msg
 
 from PySide6 import QtCore
@@ -8,6 +10,9 @@ from PySide6.QtWidgets import QTableWidgetItem
 
 from .ui.ui_attachments_browser import Ui_AttachmentsBrowser
 
+
+logger = logging.getLogger(__name__)
+logger.addHandler(logging.NullHandler())
 
 class AttachmentsBrowser(QtWidgets.QWidget):
     # Signals that an attachment was double clicked.
@@ -77,3 +82,5 @@ class AttachmentsBrowser(QtWidgets.QWidget):
                     self.signedAttachmentSelected.emit(int(data))
             else:
                 self.attachmentSelected.emit(int(data))
+        else:
+            logger.warn(f'Received index on cell double click that was outside of table (row: {row}, colunn {column}).')
