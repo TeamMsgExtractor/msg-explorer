@@ -4,9 +4,9 @@ from PySide6.QtCore import QEventLoop
 from PySide6.QtWidgets import QApplication
 
 
-
 def mainRunner():
     app = QApplication([])
+
     from . import font_handler
     font_handler.getFontHandler().registerFont(QApplication.font, QApplication.setFont)
 

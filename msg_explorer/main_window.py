@@ -1,12 +1,14 @@
 # This Python file uses the following encoding: utf-8
+import os
 import threading
 
 import extract_msg
 
-from PySide6.QtWidgets import QApplication, QFileDialog, QMainWindow, QMessageBox, QWidget
 from PySide6.QtCore import QEventLoop, Signal, SIGNAL, Slot, SLOT
+from PySide6.QtGui import QIcon, QPixmap
+from PySide6.QtWidgets import QApplication, QFileDialog, QMainWindow, QMessageBox, QWidget
 
-from . import font_handler, hex_viewer, utils
+from . import app_icons, font_handler, hex_viewer, utils, __version__
 from .logger_widget import LoggerWidget
 from .ui.ui_main_window import Ui_MainWindow
 from .ui.ui_loading_screen import Ui_LoadingScreen
@@ -64,6 +66,15 @@ class MainWindow(QMainWindow):
         self.__parentMsgs = []
 
         self.__logger = LoggerWidget()
+
+        self.mainIcon = QIcon(QPixmap(":/icon/envelope_1024.png"))
+        self.setWindowIcon(self.mainIcon)
+
+        # Attempt to set the actual icon on the taskbar in windows.
+        if os.name == 'nt':
+            import ctypes
+            appid = f'TeamMsgExtractor.MSGExplorer.{__version__}'
+            ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(appid)
 
     def closeEvent(self, event):
         """

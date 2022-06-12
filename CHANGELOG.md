@@ -1,3 +1,6 @@
+**v1.2.2**
+* Added app icon.
+
 **v1.2.1**
 * Expanded range of compatible extract-msg versions.
 * Fixed bugs that prevented properly viewing properties.
