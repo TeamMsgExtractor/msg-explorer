@@ -1,6 +1,6 @@
 **v1.2.1**
 * Expanded range of compatible extract-msg versions.
-* Fixed bugs that prevented properly properties.
+* Fixed bugs that prevented properly viewing properties.
 
 **v1.2.0**
 * Updated to new version set of extract-msg (>=0.33.0, <0.34.0). Version 0.32.0 was skipped intentionally due to some issues in the code as well as to prioritize the release of version 0.33.0.
