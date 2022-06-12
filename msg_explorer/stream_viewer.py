@@ -15,7 +15,7 @@ from .ui.ui_stream_viewer import Ui_StreamViewer
 class StreamViewer(QtWidgets.QWidget):
     def __init__(self, parent = None):
         super().__init__(parent)
-        
+
         self.ui = Ui_StreamViewer()
         self.ui.setupUi(self)
         self.__msg = None
@@ -86,14 +86,17 @@ class StreamViewer(QtWidgets.QWidget):
             return self.openStream(name[:-1] + [name[-1][:-9]])
 
         self.ui.pageHexViewer.loadHexData(self.__msg._getStream(name, False))
-        self.ui.labelStreamName.setText('/'.join(name))
+        # Make sure the path we use is local to the current file.
+        self.ui.labelStreamName.setText('/'.join(name[self.__msg.prefixLen:]))
         # Now determine how to load the rest of the data.
         if name[-1] == '__properties_version1.0':
             _type = 'prop'
             source = self.__msg
-            path = copy.copy(name)
+            # Second part is to cut out the prefix for traversal.
+            path = name[self.__msg.prefixLen:]
             # This is necessary for some operations.
             currentPath = []
+
             try:
                 while len(path) > 1:
                     if path[0].startswith('__attach'):
@@ -111,7 +114,7 @@ class StreamViewer(QtWidgets.QWidget):
             except Exception as e:
                 utils.displayException(e)
                 return
-            props = source.mainProperties if isinstance(self.__msg, extract_msg.msg.MSGFile) else source.props
+            props = source.mainProperties if isinstance(source, extract_msg.msg.MSGFile) else source.props
             self.ui.pageParsedProperties.loadProperties(props)
         else:
             _type = name[-1][-4:]
