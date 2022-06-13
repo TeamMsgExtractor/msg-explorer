@@ -28,7 +28,7 @@ https://github.com/TeamMsgExtractor/msg-explorer
 
 __author__ = 'Destiny Peterson'
 __date__ = '2022-06-12'
-__version__ = '1.2.1'
+__version__ = '1.2.2'
 
 # When this module is imported, we should try to compile the forms. They only
 # compile when they are outdated.
