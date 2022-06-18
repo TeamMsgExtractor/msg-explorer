@@ -53,4 +53,5 @@ setup(
     include_package_data=True,
     install_requires=dependencies,
     classifiers=classifiers,
+    python_requires='>=3.6'
 )

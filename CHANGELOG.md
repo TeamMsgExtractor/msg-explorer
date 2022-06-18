@@ -1,3 +1,6 @@
+**v1.2.3**
+* Added `python_requires` to setup.py.
+
 **v1.2.2**
 * Added app icon.
 
