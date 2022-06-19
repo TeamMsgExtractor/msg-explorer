@@ -9,7 +9,7 @@ from PySide6 import QtWidgets
 from PySide6.QtCore import Signal, SIGNAL, Slot, SLOT
 from PySide6.QtWidgets import QTreeWidgetItem
 
-from . import utils
+from . import constants, utils
 from .ui.ui_msg_tree_viewer import Ui_MSGTreeViewer
 
 
@@ -21,6 +21,9 @@ class _DataTypeEnum(enum.Enum):
 
 class MsgTreeItem(QTreeWidgetItem):
     def __init__(self, text : str, _type : _DataTypeEnum):
+        # First thing is first, check the text to see if it needs to be corrected.
+        self.__rawText = text
+        text = constants.RE_SPECIAL_CHAR.sub(lambda match : f'[{ord(match.group())}]', text)
         super().__init__((text,))
         self.__entryType = _type
 
@@ -34,6 +37,10 @@ class MsgTreeItem(QTreeWidgetItem):
     @property
     def entryType(self) -> _DataTypeEnum:
         return self.__entryType
+
+    @property
+    def rawText(self) -> str:
+        return self.__rawText
 
 
 
@@ -105,10 +112,10 @@ class MSGTreeViewer(QtWidgets.QWidget):
         """
         # Check if the item clicked was a stream. If it was, then continue.
         if item.entryType == _DataTypeEnum.FILE:
-            path = [item.data(0, 0)]
+            path = [item.rawText]
             while item.parent():
                 item = item.parent()
-                path.insert(0, item.data(0, 0))
+                path.insert(0, item.rawText)
 
             self.fileDoubleClicked.emit(path)
 

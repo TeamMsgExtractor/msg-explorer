@@ -13,8 +13,8 @@ HEX_LINE_LEN = 0x10
 _CHARS = (
     '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',
     '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',
-    ' ', '!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/',
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';', '<', '=', '>', '?',
+    ' ', '!', '&quot;', '#', '$', '%', '&amp;', '&apos;', '(', ')', '*', '+', ',', '-', '.', '/',
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';', '&lt;', '=', '&gt;', '?',
     '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
     'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', '\\', ']', '^', '_',
     '`', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
@@ -58,6 +58,10 @@ class HexViewer(QtWidgets.QWidget):
         if lines:
             if len(lines[-1]) != 16:
                 lines[-1] += ['  '] * (16 - len(lines[-1]))
-        finalHexData = 'Offset    00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F    Decoded Text\n'
-        finalHexData += '\n'.join(f'{index:08X}  {" ".join(line)}    {rawDataLines[index]}' for index, line in enumerate(lines))
-        self.ui.hexViewer.setPlainText(finalHexData)
+
+        # First setup the start of the data.
+        finalHexData = '<html><head><style>span { color: #0000AA; }</style></head><body>'
+        finalHexData += '<span>Offset    00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F    Decoded Text</span>\n<br>'.replace(' ', '&nbsp;')
+        finalHexData += '<br>\n'.join(f'<span>{index:08X}</span>  {" ".join(line)}    {rawDataLines[index]}' for index, line in enumerate(lines)).replace(' ', '&nbsp;')
+        finalHexData += '</body></html>'
+        self.ui.hexViewer.setHtml(finalHexData)

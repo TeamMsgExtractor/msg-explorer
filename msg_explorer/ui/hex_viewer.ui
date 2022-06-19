@@ -15,15 +15,18 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <widget class="QPlainTextEdit" name="hexViewer">
+    <widget class="QTextEdit" name="hexViewer">
      <property name="font">
       <font>
        <family>Consolas</family>
        <pointsize>9</pointsize>
       </font>
      </property>
+     <property name="undoRedoEnabled">
+      <bool>false</bool>
+     </property>
      <property name="lineWrapMode">
-      <enum>QPlainTextEdit::NoWrap</enum>
+      <enum>QTextEdit::NoWrap</enum>
      </property>
      <property name="readOnly">
       <bool>true</bool>

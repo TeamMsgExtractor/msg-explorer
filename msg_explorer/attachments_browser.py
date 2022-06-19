@@ -14,6 +14,7 @@ from .ui.ui_attachments_browser import Ui_AttachmentsBrowser
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
 
+
 class AttachmentsBrowser(QtWidgets.QWidget):
     # Signals that an attachment was double clicked.
     attachmentSelected = Signal(int)

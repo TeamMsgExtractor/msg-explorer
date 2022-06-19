@@ -1,3 +1,8 @@
+**v1.2.4**
+* Fixed issue with files with non-standard streams from custom attachment types. There were issues with viewing the streams in the tree as well as with opening them in the stream viewer.
+* Switched `HexViewer` from `QPlainTextEdit` to `QTextEdit` to allow for coloring to easily differentiate the headers from the actual data.
+* Added the ability to drag and drop an MSG file onto the window to open it.
+
 **v1.2.3**
 * Added `python_requires` to setup.py.
 

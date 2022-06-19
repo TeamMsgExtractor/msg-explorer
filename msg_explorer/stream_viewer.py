@@ -1,5 +1,6 @@
 # This Python file uses the following encoding: utf-8
 import copy
+import logging
 import sys
 
 import extract_msg
@@ -8,8 +9,12 @@ from PySide6 import QtCore
 from PySide6 import QtWidgets
 from PySide6.QtCore import Signal, SIGNAL, Slot, SLOT
 
-from . import utils
+from . import constants, utils
 from .ui.ui_stream_viewer import Ui_StreamViewer
+
+
+logger = logging.getLogger(__name__)
+logger.addHandler(logging.NullHandler())
 
 
 class StreamViewer(QtWidgets.QWidget):
@@ -119,26 +124,34 @@ class StreamViewer(QtWidgets.QWidget):
         else:
             _type = name[-1][-4:]
             path = name[:-1] + [name[-1][:-4]]
-            data = self.__msg._getTypedStream(path, False, _type)[1]
-            if _type in ('001E', '001F'): # String.
-                self.ui.pageParsedString.loadString(data, _type)
-            elif _type == '0048': # GUID.
-                self.ui.pageParsedGuidViewer.loadGuid(data)
-            elif _type == '0102': # Binary.
-                # For binary, we just show the hex viewer.
-                pass
-            elif _type == '1102': # Multiple Binary.
-                # For multiple binary we load a page with a list
-                # of entries and a hex viewer that shows the
-                # currently selected one.
-                self.ui.pageParsedMultipleBinary.loadMultiple(data)
-            elif _type.startswith('1'): # Other multiples.
-                self.ui.pageParsedMultiple.loadMultiple(data, _type)
+            if constants.RE_STANDARD_FILE.match(name[-1]):
+                data = self.__msg._getTypedStream(path, False, _type)[1]
+                if _type in ('001E', '001F'): # String.
+                    self.ui.pageParsedString.loadString(data, _type)
+                elif _type == '0048': # GUID.
+                    self.ui.pageParsedGuidViewer.loadGuid(data)
+                elif _type == '0102': # Binary.
+                    # For binary, we just show the hex viewer.
+                    pass
+                elif _type == '1102': # Multiple Binary.
+                    # For multiple binary we load a page with a list
+                    # of entries and a hex viewer that shows the
+                    # currently selected one.
+                    self.ui.pageParsedMultipleBinary.loadMultiple(data)
+                elif _type.startswith('1'): # Other multiples.
+                    self.ui.pageParsedMultiple.loadMultiple(data, _type)
 
-        try:
-            self.__currentPage = self.__typePages[_type]
-        except KeyError as e:
-            utils.displayException(e)
+        # First, check to make sure we are not opening a special custom attachment
+        # file. If we are, this regular expression won't match it, and we just
+        # treat it as binary data.
+        if constants.RE_STANDARD_FILE.match(name[-1]):
+            try:
+                self.__currentPage = self.__typePages[_type]
+            except KeyError as e:
+                utils.displayException(e)
+        else:
+            logger.info(f'Attempting to view non-standard stream "{"/".join(name)}". Interpretting as plain binary data.')
+            self.__currentPage = self.ui.pageHexViewer
         self._changeViewType()
 
     @Slot(str, bytes)

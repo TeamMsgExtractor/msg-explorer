@@ -1,5 +1,6 @@
 # This Python file uses the following encoding: utf-8
 import os
+import pathlib
 import threading
 
 import extract_msg
@@ -83,6 +84,20 @@ class MainWindow(QMainWindow):
         """
         QApplication.closeAllWindows()
 
+    def dragEnterEvent(self, event):
+        # Handle a file being drag and dropped onto this window.
+        mime = event.mimeData()
+        if mime.hasUrls() and len(mime.urls()) == 1 and mime.urls()[0].isLocalFile():
+            # We know it has exactly one local url, so let's check it.
+            f = pathlib.Path(mime.urls()[0].toLocalFile())
+            if f.suffix.lower() == '.msg' and f.is_file():
+                event.acceptProposedAction()
+
+    def dropEvent(self, event):
+        if QMessageBox.question(self, 'Open Msg?', 'Are you sure you want to open this MSG file?') == QMessageBox.Yes:
+            event.acceptProposedAction()
+            self.loadMsgFile(event.mimeData().urls()[0].toLocalFile())
+
     @Slot(int)
     def attachmentSelected(self, index):
         if isinstance(self.__msg, extract_msg.MessageSignedBase):
@@ -118,12 +133,15 @@ class MainWindow(QMainWindow):
             self.ui.actionLoad_Parent_Msg.setEnabled(False)
 
     @Slot()
-    def loadMsgFile(self):
+    def loadMsgFile(self, path = None):
         """
         Brings up a dialog to load a specific MSG file.
         """
-        msgPath = QFileDialog.getOpenFileName(filter = self.tr('MSG Files (*.msg)'))
-        if msgPath[0]:
+        if path:
+            msgPath = path
+        else:
+            msgPath = QFileDialog.getOpenFileName(filter = self.tr('MSG Files (*.msg)'))[0]
+        if msgPath:
             # Create a popup for the loading screen.
             loadingScreenWidget = QWidget()
             loadingScreen = Ui_LoadingScreen()
@@ -170,7 +188,7 @@ class MainWindow(QMainWindow):
 
     def _loadMsgThread(self, msgPath, output):
         try:
-            msgFile = extract_msg.openMsg(msgPath[0], attachmentErrorBehavior = extract_msg.enums.AttachErrorBehavior.BROKEN, strict = False)
+            msgFile = extract_msg.openMsg(msgPath, attachmentErrorBehavior = extract_msg.enums.AttachErrorBehavior.BROKEN, strict = False)
             output[0] = msgFile
         except Exception as e:
             output[0] = e
