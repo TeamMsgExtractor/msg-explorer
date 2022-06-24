@@ -41,6 +41,7 @@ class MultipleViewer(QtWidgets.QWidget):
 
     @Slot(list, str)
     def loadMultiple(self, entries, _type):
+        self.ui.listEntries.clear()
         self.ui.labelType.setText(_DATE_TYPE_STRINGS[_type])
         self.ui.listEntries.addItems(self.__dataToStrings(entries))
 
