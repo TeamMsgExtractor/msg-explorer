@@ -1,3 +1,7 @@
+**v1.2.6**
+* Fixed bugs in named property viewer.
+* Fixed a bug where sorting caused various tables to display incorrectly (forgot to turn off sorting while editing them and turn it back on afterwards).
+
 **v1.2.5**
 * Fixed issue that cause the multiple viewer to not clear it's data.
 

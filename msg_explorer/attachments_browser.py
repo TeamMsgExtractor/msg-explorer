@@ -42,21 +42,23 @@ class AttachmentsBrowser(QtWidgets.QWidget):
         self.ui.tableAttachments.setRowCount(totalAttachments)
         indexPostfix = ' (Regular)' if self.__isSigned else ''
         count = 0
+        self.ui.tableAttachments.setSortingEnabled(False)
         for index, att in enumerate(msgFile._rawAttachments if self.__isSigned else msgFile.attachments):
             self.ui.tableAttachments.setItem(index, 0, QTableWidgetItem(str(index) + indexPostfix))
             if isinstance(att, extract_msg.Attachment):
                 self.ui.tableAttachments.setItem(index, 1, QTableWidgetItem("OK"))
-                self.ui.tableAttachments.setItem(index, 2, QTableWidgetItem(att.shortFilename))
-                self.ui.tableAttachments.setItem(index, 3, QTableWidgetItem(att.longFilename))
-                self.ui.tableAttachments.setItem(index, 4, QTableWidgetItem(att.cid))
-                self.ui.tableAttachments.setItem(index, 5, QTableWidgetItem(att.mimetype))
-                self.ui.tableAttachments.setItem(index, 6, QTableWidgetItem("Not Rendered" if att.renderingPosition and att.renderingPosition == 0xFFFFFFFF else str(att.renderingPosition)))
             elif isinstance(att, extract_msg.attachment.BrokenAttachment):
                 self.ui.tableAttachments.setItem(index, 1, QTableWidgetItem("Broken"))
             elif isinstance(att, extract_msg.attachment.UnsupportedAttachment):
                 self.ui.tableAttachments.setItem(index, 1, QTableWidgetItem("Unsupported"))
             else:
                 self.ui.tableAttachments.setItem(index, 1, QTableWidgetItem("Unknown Type"))
+            self.ui.tableAttachments.setItem(index, 2, QTableWidgetItem(att.shortFilename))
+            self.ui.tableAttachments.setItem(index, 3, QTableWidgetItem(att.longFilename))
+            self.ui.tableAttachments.setItem(index, 4, QTableWidgetItem(att.cid))
+            print(att.mimetype)
+            self.ui.tableAttachments.setItem(index, 5, QTableWidgetItem(att.mimetype))
+            self.ui.tableAttachments.setItem(index, 6, QTableWidgetItem("Not Rendered" if att.renderingPosition and att.renderingPosition == 0xFFFFFFFF else str(att.renderingPosition)))
             count += 1
         if self.__isSigned:
             # If it's signed, also display the regular attachments.
@@ -66,6 +68,8 @@ class AttachmentsBrowser(QtWidgets.QWidget):
                 self.ui.tableAttachments.setItem(count + index, 2, QTableWidgetItem(att.name))
                 self.ui.tableAttachments.setItem(count + index, 3, QTableWidgetItem(att.name))
                 self.ui.tableAttachments.setItem(count + index, 5, QTableWidgetItem(att.mimetype))
+
+        self.ui.tableAttachments.setSortingEnabled(True)
 
     @Slot(int, int)
     def _cellDoubleClicked(self, row : int, column : int):

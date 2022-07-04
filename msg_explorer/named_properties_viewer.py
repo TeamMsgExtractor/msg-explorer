@@ -1,13 +1,19 @@
 # This Python file uses the following encoding: utf-8
+import logging
+
 import extract_msg
 
 from PySide6 import QtCore
 from PySide6 import QtWidgets
 from PySide6.QtCore import Signal, SIGNAL, Slot, SLOT
-from PySide6.QtWidgets import QTableWidgetItem
+from PySide6.QtWidgets import QMessageBox, QTableWidgetItem
 
 from . import utils
 from .ui.ui_named_properties_viewer import Ui_NamedPropertiesViewer
+
+
+logger = logging.getLogger(__name__)
+logger.addHandler(logging.NullHandler())
 
 
 class NamedPIDItem(QTableWidgetItem):
@@ -42,14 +48,18 @@ class NamedPropertiesViewer(QtWidgets.QWidget):
         property, not the data.
         """
         self.ui.tableNamedProperties.setRowCount(len(self.__named))
+        self.ui.tableNamedProperties.setSortingEnabled(False)
         for index, key in enumerate(self.__named):
             self.ui.tableNamedProperties.setItem(index, 0, QTableWidgetItem(key))
+            #print(self.__named[key].namedPropertyID)
             self.ui.tableNamedProperties.setItem(index, 1, NamedPIDItem(str(self.__named[key].namedPropertyID)))
+        self.ui.tableNamedProperties.setSortingEnabled(True)
 
     @Slot()
     def msgClosed(self):
         self.ui.comboBoxInstance.clear()
         self.ui.tableNamedProperties.clearContents()
+        self.ui.tableNamedProperties.setRowCount(0)
         self.__msg = None
         self.__named = None
         self.__attachments = None
@@ -80,6 +90,7 @@ class NamedPropertiesViewer(QtWidgets.QWidget):
             # path to give to the signal.
             for _type in extract_msg.constants.PTYPES:
                 start[-1] = f'__substg1.0_{code:04X}{_type:04X}'
+                logger.info(f'Checking for named property stream at {start}')
                 if self.__msg.exists(start):
                     return self.namedPropertySelected.emit(start)
             else:
@@ -99,6 +110,7 @@ class NamedPropertiesViewer(QtWidgets.QWidget):
                 getData = attachment.namedProperties.get
                 getStream = attachment._getTypedStream
 
+            self.ui.tableNamedProperties.setSortingEnabled(False)
             for index in range(self.ui.tableNamedProperties.rowCount()):
                 key = self.ui.tableNamedProperties.item(index, 0).data(0)
                 # We need to figure out what to display for the data.
@@ -110,6 +122,7 @@ class NamedPropertiesViewer(QtWidgets.QWidget):
                     self.ui.tableNamedProperties.setItem(index, 2, QTableWidgetItem('[Stream]'))
                 else:
                     self.ui.tableNamedProperties.setItem(index, 2, QTableWidgetItem(utils.dataToString(data)))
+            self.ui.tableNamedProperties.setSortingEnabled(True)
 
 
 
