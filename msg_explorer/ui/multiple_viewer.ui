@@ -46,7 +46,14 @@
     </layout>
    </item>
    <item row="1" column="0">
-    <widget class="QListWidget" name="listEntries"/>
+    <widget class="QListWidget" name="listEntries">
+     <property name="verticalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
+     <property name="horizontalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

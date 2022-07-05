@@ -51,7 +51,6 @@ class NamedPropertiesViewer(QtWidgets.QWidget):
         self.ui.tableNamedProperties.setSortingEnabled(False)
         for index, key in enumerate(self.__named):
             self.ui.tableNamedProperties.setItem(index, 0, QTableWidgetItem(key))
-            #print(self.__named[key].namedPropertyID)
             self.ui.tableNamedProperties.setItem(index, 1, NamedPIDItem(str(self.__named[key].namedPropertyID)))
         self.ui.tableNamedProperties.setSortingEnabled(True)
 
@@ -84,7 +83,7 @@ class NamedPropertiesViewer(QtWidgets.QWidget):
             if self.ui.comboBoxInstance.currentText() == 'MSG File':
                 start = ['']
             else:
-                start [f'__attach_version1.0_#{int(self.ui.comboBoxInstance.currentText().split(" ")[1]):08X}', '']
+                start = [f'__attach_version1.0_#{int(self.ui.comboBoxInstance.currentText().split(" ")[1]):08X}', '']
 
             # Now we need to determine the type so we can generate the
             # path to give to the signal.

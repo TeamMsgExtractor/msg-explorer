@@ -56,7 +56,6 @@ class AttachmentsBrowser(QtWidgets.QWidget):
             self.ui.tableAttachments.setItem(index, 2, QTableWidgetItem(att.shortFilename))
             self.ui.tableAttachments.setItem(index, 3, QTableWidgetItem(att.longFilename))
             self.ui.tableAttachments.setItem(index, 4, QTableWidgetItem(att.cid))
-            print(att.mimetype)
             self.ui.tableAttachments.setItem(index, 5, QTableWidgetItem(att.mimetype))
             self.ui.tableAttachments.setItem(index, 6, QTableWidgetItem("Not Rendered" if att.renderingPosition and att.renderingPosition == 0xFFFFFFFF else str(att.renderingPosition)))
             count += 1

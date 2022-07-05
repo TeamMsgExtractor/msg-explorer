@@ -1,3 +1,8 @@
+**v1.2.7**
+* Fixed typo that prevented named properties on attachments from being viewed if they were a stream.
+* Removed debug prints that accidentally made it into the release.
+* Changed UI elements to use `ScrollPerPixel` instead of `ScrollPerItem`.
+
 **v1.2.6**
 * Fixed bugs in named property viewer.
 * Fixed a bug where sorting caused various tables to display incorrectly (forgot to turn off sorting while editing them and turn it back on afterwards).
