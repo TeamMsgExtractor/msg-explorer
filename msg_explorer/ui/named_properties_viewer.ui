@@ -38,6 +38,11 @@
      </column>
      <column>
       <property name="text">
+       <string>Property Set GUID</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
        <string>Named PID</string>
       </property>
      </column>

@@ -50,8 +50,9 @@ class NamedPropertiesViewer(QtWidgets.QWidget):
         self.ui.tableNamedProperties.setRowCount(len(self.__named))
         self.ui.tableNamedProperties.setSortingEnabled(False)
         for index, key in enumerate(self.__named):
-            self.ui.tableNamedProperties.setItem(index, 0, QTableWidgetItem(key))
-            self.ui.tableNamedProperties.setItem(index, 1, NamedPIDItem(str(self.__named[key].namedPropertyID)))
+            self.ui.tableNamedProperties.setItem(index, 0, QTableWidgetItem(key[0]))
+            self.ui.tableNamedProperties.setItem(index, 1, QTableWidgetItem(key[1]))
+            self.ui.tableNamedProperties.setItem(index, 2, NamedPIDItem(str(self.__named[key].namedPropertyID)))
         self.ui.tableNamedProperties.setSortingEnabled(True)
 
     @Slot()
@@ -77,9 +78,9 @@ class NamedPropertiesViewer(QtWidgets.QWidget):
 
     @Slot(int, int)
     def _cellDoubleClicked(self, row, column):
-        if self.ui.tableNamedProperties.item(row, 2).data(0) == '[Stream]':
+        if self.ui.tableNamedProperties.item(row, 3).data(0) == '[Stream]':
             name = self.ui.tableNamedProperties.item(row, 0).data(0)
-            code = 0x8000 + int(self.ui.tableNamedProperties.item(row, 1).data(0))
+            code = 0x8000 + int(self.ui.tableNamedProperties.item(row, 2).data(0))
             if self.ui.comboBoxInstance.currentText() == 'MSG File':
                 start = ['']
             else:
@@ -111,16 +112,17 @@ class NamedPropertiesViewer(QtWidgets.QWidget):
 
             self.ui.tableNamedProperties.setSortingEnabled(False)
             for index in range(self.ui.tableNamedProperties.rowCount()):
-                key = self.ui.tableNamedProperties.item(index, 0).data(0)
+                key = (self.ui.tableNamedProperties.item(index, 0).data(0),
+                       self.ui.tableNamedProperties.item(index, 1).data(0))
                 # We need to figure out what to display for the data.
                 data = getData(self.__named[key])
                 if isinstance(data, (int, float, bool, None.__class__)):
                     # This helps to shortcut a bunch of properties.
-                    self.ui.tableNamedProperties.setItem(index, 2, QTableWidgetItem(utils.dataToString(data)))
+                    self.ui.tableNamedProperties.setItem(index, 3, QTableWidgetItem(utils.dataToString(data)))
                 elif isinstance(data, (bytes, list, tuple)) or getStream(f'__substg1.0_{self.__named[key].propertyStreamID}')[0]:
-                    self.ui.tableNamedProperties.setItem(index, 2, QTableWidgetItem('[Stream]'))
+                    self.ui.tableNamedProperties.setItem(index, 3, QTableWidgetItem('[Stream]'))
                 else:
-                    self.ui.tableNamedProperties.setItem(index, 2, QTableWidgetItem(utils.dataToString(data)))
+                    self.ui.tableNamedProperties.setItem(index, 3, QTableWidgetItem(utils.dataToString(data)))
             self.ui.tableNamedProperties.setSortingEnabled(True)
 
 

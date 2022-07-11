@@ -1,3 +1,6 @@
+**v1.3.0**
+* Upgraded to `extract-msg` version 0.35.0. Named properties viewer has been updated to reflect the new form.
+
 **v1.2.7**
 * Fixed typo that prevented named properties on attachments from being viewed if they were a stream.
 * Removed debug prints that accidentally made it into the release.
