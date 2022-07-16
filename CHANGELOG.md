@@ -1,3 +1,6 @@
+**v1.4.1**
+* Didn't properly edit the version number for extract-msg last time.
+
 **v1.4.0**
 * Upgraded to `extract-msg` version 0.36.0.
 * Fixed bug in `HexViewer` that caused the offset to be wrong.
