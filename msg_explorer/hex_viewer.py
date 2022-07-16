@@ -62,6 +62,6 @@ class HexViewer(QtWidgets.QWidget):
         # First setup the start of the data.
         finalHexData = '<html><head><style>span { color: #0000AA; }</style></head><body>'
         finalHexData += '<span>Offset    00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F    Decoded Text</span>\n<br>'.replace(' ', '&nbsp;')
-        finalHexData += '<br>\n'.join(f'<span>{index:08X}</span>  {" ".join(line)}    {rawDataLines[index]}' for index, line in enumerate(lines)).replace(' ', '&nbsp;')
+        finalHexData += '<br>\n'.join(f'<span>{index * 16:08X}</span>  {" ".join(line)}    {rawDataLines[index]}' for index, line in enumerate(lines)).replace(' ', '&nbsp;')
         finalHexData += '</body></html>'
         self.ui.hexViewer.setHtml(finalHexData)

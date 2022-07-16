@@ -1,3 +1,7 @@
+**v1.4.0**
+* Upgraded to `extract-msg` version 0.36.0.
+* Fixed bug in `HexViewer` that caused the offset to be wrong.
+
 **v1.3.0**
 * Upgraded to `extract-msg` version 0.35.0. Named properties viewer has been updated to reflect the new form.
 
