@@ -1,7 +1,8 @@
 **v1.5.0**
-* Attempting to switch to strict semantic versioning. This version contains no breaking changes to previous code (possible exception is a bump to requirements), only additions.
-* Bump to `extract-msg` version 0.38.3.
-* Added button to export the current MSG file to a file.
+* Attempting to switch to strict semantic versioning. This version contains no breaking changes to API (possible exception is a bump to requirements), only additions.
+* Bump to `extract-msg` version 0.38.4.
+* Added button to export the current MSG file to a file. This works on non-embedded MSG files too.
+* Filtered more of the strings through the tr function so that text can be translated in more places.
 
 **v1.4.1**
 * Didn't properly edit the version number for extract-msg last time.

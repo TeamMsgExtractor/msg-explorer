@@ -67,6 +67,7 @@
     </property>
     <addaction name="actionLoad_Msg_File"/>
     <addaction name="actionLoad_Parent_Msg"/>
+    <addaction name="actionExport_Current_File"/>
     <addaction name="actionClose_Current_File"/>
     <addaction name="separator"/>
     <addaction name="actionOpen_Log"/>
@@ -88,6 +89,9 @@
    </property>
   </action>
   <action name="actionClose_Current_File">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Close Current File</string>
    </property>
@@ -113,6 +117,14 @@
    </property>
    <property name="text">
     <string>Load Parent Msg</string>
+   </property>
+  </action>
+  <action name="actionExport_Current_File">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Export Current File</string>
    </property>
   </action>
  </widget>
