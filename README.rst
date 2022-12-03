@@ -19,7 +19,7 @@ as msg-extractor. You can find it here: `Discord`_
 
 Changelog
 ---------
--  `Changelog`__
+-  `Changelog`_
 
 Usage
 -----
