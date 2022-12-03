@@ -133,6 +133,18 @@ class MainWindow(QMainWindow):
             self.ui.actionLoad_Parent_Msg.setEnabled(False)
 
     @Slot()
+    def exportFile(self):
+        """
+        Export the currently opened MSG file to the location the user provides.
+        """
+        filename = QFileDialog.getSaveFileName(self, self.tr('Export File'), filter = self.tr('MSG files (*.msg)'))
+        if filename[0]:
+            try:
+                self.__msg.export(filename[0])
+            except Exception as e:
+                displayException(e)
+
+    @Slot()
     def loadMsgFile(self, path = None):
         """
         Brings up a dialog to load a specific MSG file.
@@ -140,7 +152,7 @@ class MainWindow(QMainWindow):
         if path:
             msgPath = path
         else:
-            msgPath = QFileDialog.getOpenFileName(filter = self.tr('MSG Files (*.msg)'))[0]
+            msgPath = QFileDialog.getOpenFileName(filter = self.tr('MSG files (*.msg)'))[0]
         if msgPath:
             # Create a popup for the loading screen.
             loadingScreenWidget = QWidget()

@@ -1,3 +1,8 @@
+**v1.5.0**
+* Attempting to switch to strict semantic versioning. This version contains no breaking changes to previous code (possible exception is a bump to requirements), only additions.
+* Bump to `extract-msg` version 0.38.3.
+* Added button to export the current MSG file to a file.
+
 **v1.4.1**
 * Didn't properly edit the version number for extract-msg last time.
 
