@@ -19,7 +19,7 @@ as msg-extractor. You can find it here: `Discord`_
 
 Changelog
 ---------
--  `Changelog`__
+-  `Changelog`_
 
 Usage
 -----
@@ -51,6 +51,7 @@ Supporting The Module
 
 If you'd like to donate to help support the development of the module, you can
 donate to Destiny using one of the following services:
+
 * `Buy Me a Coffee`_
 * `Ko-fi`_
 * `Patreon`_
