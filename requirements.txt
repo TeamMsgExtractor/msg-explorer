@@ -1,4 +1,4 @@
 
 # First level requirements
-extract-msg>=0.38.4,<0.39
+extract-msg>=0.39.1,<0.40
 PySide6>=6.3.0,<6.5

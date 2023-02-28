@@ -1,4 +1,6 @@
 #! /usr/env python3
+import sys
+
 from msg_explorer import main
 
 

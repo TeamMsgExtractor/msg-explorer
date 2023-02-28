@@ -81,11 +81,11 @@ Credits
 .. |License: GPL v3| image:: https://img.shields.io/badge/License-GPLv3-blue.svg
    :target: LICENSE.txt
 
-.. |PyPI3| image:: https://img.shields.io/badge/pypi-1.5.0-blue.svg
-   :target: https://pypi.org/project/msg-explorer/1.5.0/
+.. |PyPI3| image:: https://img.shields.io/badge/pypi-1.6.0-blue.svg
+   :target: https://pypi.org/project/msg-explorer/1.6.0/
 
-.. |PyPI2| image:: https://img.shields.io/badge/python-3.6+-brightgreen.svg
-   :target: https://www.python.org/downloads/release/python-367/
+.. |PyPI2| image:: https://img.shields.io/badge/python-3.8+-brightgreen.svg
+   :target: https://www.python.org/downloads/release/python-3816/
 .. _Destiny Peterson (The Elemental of Destruction): https://github.com/TheElementalOfDestruction
 .. _Discord: https://discord.com/invite/B77McRmzdc
 .. _Buy Me a Coffee: https://www.buymeacoffee.com/DestructionE

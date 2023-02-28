@@ -119,7 +119,7 @@ class StreamViewer(QtWidgets.QWidget):
             except Exception as e:
                 utils.displayException(e)
                 return
-            props = source.mainProperties if isinstance(source, extract_msg.msg.MSGFile) else source.props
+            props = source.props
             self.ui.pageParsedProperties.loadProperties(props)
         else:
             _type = name[-1][-4:]
