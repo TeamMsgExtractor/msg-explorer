@@ -1,3 +1,7 @@
+**v1.7.0**
+* Updated to `extract-msg` version `>=0.41.1, <0.42`.
+* Fixed a few bugs.
+
 **v1.6.0**
 * Fixed missing import in `__main__.py`.
 * Updated to `extract-msg` version `>=0.39.1, <0.40`.
