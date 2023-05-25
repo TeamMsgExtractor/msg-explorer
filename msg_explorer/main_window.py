@@ -207,7 +207,7 @@ class MainWindow(QMainWindow):
 
     def _loadMsgThread(self, msgPath, output):
         try:
-            msgFile = extract_msg.openMsg(msgPath, attachmentErrorBehavior = extract_msg.enums.AttachErrorBehavior.BROKEN, strict = False)
+            msgFile = extract_msg.openMsg(msgPath, errorBehavior = extract_msg.enums.ErrorBehavior.SUPPRESS_ALL, strict = False)
             output[0] = msgFile
         except Exception as e:
             output[0] = e

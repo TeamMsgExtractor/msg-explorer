@@ -10,7 +10,7 @@ class _FontHandler(QObject):
         self.__fonts = []
 
     @Slot()
-    def clearFonts():
+    def clearFonts(self):
         """
         Removes all fonts from the handler.
         """
