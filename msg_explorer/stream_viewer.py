@@ -75,7 +75,7 @@ class StreamViewer(QtWidgets.QWidget):
 
     @Slot(extract_msg.MSGFile)
     def msgOpened(self, msgFile):
-        self.__msg = msgFile
+        self.__msg: extract_msg.MSGFile = msgFile
 
     @Slot(list)
     def openStream(self, name, prefix = True):
@@ -90,7 +90,7 @@ class StreamViewer(QtWidgets.QWidget):
             # just telling the function to run again with the main stream.
             return self.openStream(name[:-1] + [name[-1][:-9]])
 
-        self.ui.pageHexViewer.loadHexData(self.__msg._getStream(name, False))
+        self.ui.pageHexViewer.loadHexData(self.__msg.getStream(name))
         # Make sure the path we use is local to the current file.
         self.ui.labelStreamName.setText('/'.join(name[self.__msg.prefixLen:]))
         # Now determine how to load the rest of the data.
@@ -107,7 +107,7 @@ class StreamViewer(QtWidgets.QWidget):
                     if path[0].startswith('__attach'):
                         source = source.attachments[int(path[0][-8:], 16)]
                     elif path[0].startswith('__recip'):
-                        if isinstance(self.__msg, extract_msg.message_base.MessageBase):
+                        if isinstance(self.__msg, extract_msg.msg_classes.MessageBase):
                             # If it is a message base then the recipients already exist.
                             source = source.recipients[int(path[0][-8:], 16)]
                         else:

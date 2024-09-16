@@ -35,7 +35,7 @@ class AttachmentsBrowser(QtWidgets.QWidget):
 
     @Slot(extract_msg.MSGFile)
     def msgOpened(self, msgFile):
-        self.__isSigned = isinstance(msgFile, extract_msg.MessageSignedBase)
+        self.__isSigned = isinstance(msgFile, extract_msg.msg_classes.MessageSignedBase)
         totalAttachments = len(msgFile.attachments)
         if self.__isSigned:
             totalAttachments += len(msgFile._rawAttachments)

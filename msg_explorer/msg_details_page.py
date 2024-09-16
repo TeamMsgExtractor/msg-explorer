@@ -35,6 +35,6 @@ class MSGDetailsPage(QtWidgets.QWidget):
         self.ui.labelClassType.setText(msgFile.classType)
         self.ui.labelEncoding.setText(msgFile.stringEncoding)
         self.ui.labelAttachCount.setText(str(len(msgFile.attachments)))
-        if isinstance(msgFile, extract_msg.MessageBase):
+        if isinstance(msgFile, extract_msg.msg_classes.MessageBase):
             self.ui.labelRecipCount.setText(str(len(msgFile.recipients)))
             self.ui.labelSubject.setText(msgFile.subject)
