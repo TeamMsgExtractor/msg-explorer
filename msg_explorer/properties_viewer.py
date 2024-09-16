@@ -40,7 +40,7 @@ class PropertiesViewer(QtWidgets.QWidget):
     def clear(self):
         pass
 
-    @Slot(extract_msg.Properties)
+    @Slot(extract_msg.PropertiesStore)
     def loadProperties(self, props):
         # We don't really need to load all of the properties,
         # so just load all of the relevant ones.

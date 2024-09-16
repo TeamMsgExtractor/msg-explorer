@@ -69,7 +69,7 @@ class NamedPropertiesViewer(QtWidgets.QWidget):
         self.__loading = True
         self.__msg = msgFile
         self.__named = msgFile.named
-        self.__attachments = msgFile._rawAttachments if isinstance(msgFile, extract_msg.MessageSignedBase) else msgFile.attachments
+        self.__attachments = msgFile._rawAttachments if isinstance(msgFile, extract_msg.msg_classes.MessageSignedBase) else msgFile.attachments
         self.ui.comboBoxInstance.addItem('MSG File')
         self.ui.comboBoxInstance.addItems((f'Attachment {x}' for x in range(len(self.__attachments))))
         self.loadNamed()

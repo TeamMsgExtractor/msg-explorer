@@ -63,7 +63,7 @@ class MSGTreeViewer(QtWidgets.QWidget):
     def msgClosed(self):
         self.ui.treeWidget.clear()
 
-    @Slot(extract_msg.msg.MSGFile)
+    @Slot(extract_msg.MSGFile)
     def msgOpened(self, msgFile):
         folderIcon = self.iconProvider.icon(QtWidgets.QFileIconProvider.Folder)
         fileIcon = fileIcon = self.iconProvider.icon(QtWidgets.QFileIconProvider.File)

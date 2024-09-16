@@ -33,7 +33,7 @@ class AttachmentsBrowser(QtWidgets.QWidget):
         self.ui.tableAttachments.clearContents()
         self.ui.tableAttachments.setRowCount(0)
 
-    @Slot(extract_msg.msg.MSGFile)
+    @Slot(extract_msg.MSGFile)
     def msgOpened(self, msgFile):
         self.__isSigned = isinstance(msgFile, extract_msg.MessageSignedBase)
         totalAttachments = len(msgFile.attachments)
@@ -43,13 +43,14 @@ class AttachmentsBrowser(QtWidgets.QWidget):
         indexPostfix = ' (Regular)' if self.__isSigned else ''
         count = 0
         self.ui.tableAttachments.setSortingEnabled(False)
+        aType = extract_msg.enums.AttachmentType
         for index, att in enumerate(msgFile._rawAttachments if self.__isSigned else msgFile.attachments):
             self.ui.tableAttachments.setItem(index, 0, QTableWidgetItem(str(index) + indexPostfix))
-            if isinstance(att, extract_msg.Attachment):
+            if att.type in (aType.CUSTOM, aType.DATA, aType.MSG, aType.SIGNED, aType.SIGNED_EMBEDDED, aType.WEB):
                 self.ui.tableAttachments.setItem(index, 1, QTableWidgetItem("OK"))
-            elif isinstance(att, extract_msg.attachment.BrokenAttachment):
+            elif att.type is aType.BROKEN:
                 self.ui.tableAttachments.setItem(index, 1, QTableWidgetItem("Broken"))
-            elif isinstance(att, extract_msg.attachment.UnsupportedAttachment):
+            elif att.type is aType.UNSUPPORTED:
                 self.ui.tableAttachments.setItem(index, 1, QTableWidgetItem("Unsupported"))
             else:
                 self.ui.tableAttachments.setItem(index, 1, QTableWidgetItem("Unknown Type"))

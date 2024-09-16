@@ -1,0 +1,5 @@
+{
+    "python.analysis.diagnosticMode": "workspace",
+    "python.analysis.inlayHints.variableTypes": true,
+    "python.analysis.typeCheckingMode": "standard"
+}

@@ -26,7 +26,7 @@ class MSGDetailsPage(QtWidgets.QWidget):
         self.ui.labelRecipCount.setText('')
         self.ui.labelSubject.setText('')
 
-    @Slot(extract_msg.msg.MSGFile)
+    @Slot(extract_msg.MSGFile)
     def msgOpened(self, msgFile):
         if len(msgFile.path) < 1536:
             self.ui.labelPath.setText(msgFile.path)

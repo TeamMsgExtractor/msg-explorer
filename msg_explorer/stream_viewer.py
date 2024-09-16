@@ -73,7 +73,7 @@ class StreamViewer(QtWidgets.QWidget):
             self.__currentPage = self.ui.pageParsedNoData
         self._changeViewType()
 
-    @Slot(extract_msg.msg.MSGFile)
+    @Slot(extract_msg.MSGFile)
     def msgOpened(self, msgFile):
         self.__msg = msgFile
 

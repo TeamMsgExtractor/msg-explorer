@@ -20,7 +20,7 @@ class MainWindow(QMainWindow):
     # to communicate to any components that need it so the close function
     # doesn't have to be modified, just the signal/slot connections.
     msgClosed = Signal()
-    msgOpened = Signal(extract_msg.msg.MSGFile)
+    msgOpened = Signal(extract_msg.MSGFile)
     # A signal which announces a desire to have the event loop process once.
     processEventLoop = Signal()
 
@@ -101,22 +101,21 @@ class MainWindow(QMainWindow):
 
     @Slot(int)
     def attachmentSelected(self, index):
-        if isinstance(self.__msg, extract_msg.MessageSignedBase):
+        if isinstance(self.__msg, extract_msg.msg_classes.MessageSignedBase):
             attachment = self.__msg._rawAttachments[index]
         else:
             attachment = self.__msg.attachments[index]
 
-        if isinstance(attachment, extract_msg.Attachment):
-            if attachment.type == extract_msg.enums.AttachmentType.DATA:
-                self.ui.pageStreamView.openStream(attachment.dir.split('/') + ['__substg1.0_37010102'])
-                self.ui.tabWidget.setCurrentWidget(self.ui.pageStreamView)
-            elif attachment.type == extract_msg.enums.AttachmentType.MSG:
-                if QMessageBox.question(self, self.tr('Open Embedded Msg'), self.tr('Would you like to open the embedded MSG file?')) == QMessageBox.Yes:
-                    self.__parentMsgs.append(self.__msg)
-                    self.__msg = attachment.data
-                    self.msgClosed.emit()
-                    self.msgOpened.emit(self.__msg)
-                    self.ui.actionLoad_Parent_Msg.setEnabled(True)
+        if attachment.dataType is bytes:
+            self.ui.pageStreamView.openStream(attachment.dir.split('/') + ['__substg1.0_37010102'])
+            self.ui.tabWidget.setCurrentWidget(self.ui.pageStreamView)
+        elif attachment.dataType is extract_msg.MSGFile:
+            if QMessageBox.question(self, self.tr('Open Embedded Msg'), self.tr('Would you like to open the embedded MSG file?')) == QMessageBox.Yes:
+                self.__parentMsgs.append(self.__msg)
+                self.__msg = attachment.data
+                self.msgClosed.emit()
+                self.msgOpened.emit(self.__msg)
+                self.ui.actionLoad_Parent_Msg.setEnabled(True)
 
     @Slot()
     def closeFile(self):
