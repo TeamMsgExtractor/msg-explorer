@@ -107,12 +107,12 @@ class StreamViewer(QtWidgets.QWidget):
                     if path[0].startswith('__attach'):
                         source = source.attachments[int(path[0][-8:], 16)]
                     elif path[0].startswith('__recip'):
-                        if isinstance(self.__msg, extract_msg.msg_classes.MessageBase):
+                        if isinstance(source, extract_msg.msg_classes.MessageBase):
                             # If it is a message base then the recipients already exist.
                             source = source.recipients[int(path[0][-8:], 16)]
                         else:
                             # Otherwise, they do not and we need to create one.
-                            source = extract_msg.recipient.Recipient(currentPath + [path[0]], source)
+                            source = extract_msg.recipient.Recipient(currentPath + [path[0]], source, extract_msg.enums.RecipientType)
                     elif path[0] == '__substg1.0_3701000D':
                         source = source.data
                     currentPath.append(path.pop(0))
@@ -161,6 +161,6 @@ class StreamViewer(QtWidgets.QWidget):
         displaying streams that are not accessible through normal means.
         """
         self.__currentPage = self.__typePages['0102']
-        self.ui.labelStreamName = name
+        self.ui.labelStreamName.setText(name)
         self.ui.pageHexViewer.loadHexData(data)
         self._changeViewType()
